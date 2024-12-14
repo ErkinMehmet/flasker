@@ -1,0 +1,19 @@
+<h1>Hello World!</h1>
+
+<p>C'est ma première page web</p>
+
+<h2>{{nom}}</h2>
+
+<p>{{contenu|striptags}}</p>
+
+{% for p in pizzas %}
+    {% if p==41 %}
+        {{p+100}}<br/>
+    {% else %}
+        {{p|string|reverse}} <br/>
+    {% endif %}
+{% endfor %}
+
+<br/>
+
+{{pizzas.1}}
