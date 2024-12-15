@@ -75,12 +75,12 @@
       {% for our_user in our_users %}
       <tr>
           <th scope="row">{{our_user.id}}</th>
-          <td><a href="{{url_for('update',id=our_user.id)}}">{{our_user.name}}</a></td>
+          <td><a href="{{url_for('user_bp.update',id=our_user.id)}}">{{our_user.name}}</a></td>
           <td>{{our_user.username}}</td>
           <td>{{our_user.favorite_color}}</td>
           <td>{{our_user.createdAt.strftime('%Y-%m-%d %H:%M:%S')}}</td>
-          <td><a href="{{url_for('update',id=our_user.id)}}">Modifier</a>
-            <a href="{{url_for('delete',id=our_user.id)}}">Supprimer</a></td>
+          <td><a href="{{url_for('user_bp.update',id=our_user.id)}}">Modifier</a>
+            <a href="{{url_for('user_bp.delete',id=our_user.id)}}">Supprimer</a></td>
       </tr>
 
       {% endfor %}

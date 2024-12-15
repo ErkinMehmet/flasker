@@ -296,7 +296,7 @@ def create_app(env: AppEnvironment = None) -> Flask:
             form.author.data=''
             form.slug.data=''
             form.content.data=''
-            return redirect(url_for('post',id=post.id))
+            return redirect(url_for('post_bp.post',id=post.id))
         form.title.data=post.title
         form.author.data=post.author
         form.slug.data=post.slug
@@ -324,7 +324,7 @@ def create_app(env: AppEnvironment = None) -> Flask:
             if user:
                 if check_password_hash(user.password_hash,form.password.data):
                     login_user(user)
-                    return redirect(url_for('dashboard'))
+                    return redirect(url_for('core_bp.dashboard'))
                 else:
                     flash("Mdp n'est pas correct.")
             else:
@@ -360,6 +360,6 @@ def create_app(env: AppEnvironment = None) -> Flask:
     def logout():
         logout_user()
         flash("Tu as été bien déconnecté.")
-        return redirect(url_for('login'))
+        return redirect(url_for('core_bp.login'))
 
     return app

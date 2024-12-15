@@ -7,35 +7,35 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="{{url_for('index')}}">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{{url_for('core_bp.index')}}">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('user',name='John')}}">Profil d'utilisateur</a>
+          <a class="nav-link" href="{{url_for('test_bp.user',name='John')}}">Profil d'utilisateur</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{url_for('name')}}"> Nom</a>
+            <a class="nav-link" href="{{url_for('test_bp.name')}}"> Nom</a>
         </li>
         
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('dashboard')}}">Accueil</a>
+          <a class="nav-link" href="{{url_for('core_bp.dashboard')}}">Accueil</a>
       </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('logout')}}"> Déonnexion</a>
+          <a class="nav-link" href="{{url_for('core_bp.logout')}}"> Déonnexion</a>
       </li>
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{{url_for('user_bp.add_user')}}"> Inscription</a>
     </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url_for('login')}}"> Connexion</a>
+        <a class="nav-link" href="{{url_for('core_bp.login')}}"> Connexion</a>
     </li>
       {% endif %}
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('add_post')}}"> Ajouter poste</a>
+          <a class="nav-link" href="{{url_for('post_bp.add_post')}}"> Ajouter poste</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url_for('posts')}}"> Postes</a>
+        <a class="nav-link" href="{{url_for('post_bp.posts')}}"> Postes</a>
     </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

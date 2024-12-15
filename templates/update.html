@@ -29,7 +29,7 @@
             {% for our_user in our_users %}
             <tr>
                 <th scope="row">{{our_user.id}}</th>
-                <td><a href="{{url_for('update',id=our_user.id)}}">{{our_user.name}}</a></td>
+                <td><a href="{{url_for('user_bp.update',id=our_user.id)}}">{{our_user.name}}</a></td>
                 <td>{{our_user.email}}</td>
                 <td>{{our_user.favorite_color}}</td>
                 <td>{{our_user.createdAt.strftime('%Y-%m-%d %H:%M:%S')}}</td>
@@ -66,7 +66,7 @@
       <br/>
         {{form.submit(class="btn btn-primary")}}
 
-        <a href="{{url_for('delete',id=name_to_update.id)}}" class="btn btn-danger">Supprimer</a>
+        <a href="{{url_for('user_bp.delete',id=name_to_update.id)}}" class="btn btn-danger">Supprimer</a>
 
     </form>
     </div>

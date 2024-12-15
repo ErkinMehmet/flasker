@@ -25,9 +25,9 @@
             <strong>Couleur favorite:</strong>{{current_user.favorite_color}}<br/>
             <strong>Date:</strong>{{current_user.createdAt}}<br/>
         </p>
-        <a href="{{url_for('logout')}}" class="btn btn-secondary btn-sm">Déconnecter</a>
-        <a href="{{url_for('update',id=current_user.id)}}" class="btn btn-secondary btn-sm">Modifier le profil</a>
-        <a href="{{url_for('delete',id=current_user.id)}}" class="btn btn-danger btn-sm">Supprimer le profil</a>
+        <a href="{{url_for('core_bp.logout')}}" class="btn btn-secondary btn-sm">Déconnecter</a>
+        <a href="{{url_for('user_bp.update',id=current_user.id)}}" class="btn btn-secondary btn-sm">Modifier le profil</a>
+        <a href="{{url_for('user_bp.delete',id=current_user.id)}}" class="btn btn-danger btn-sm">Supprimer le profil</a>
     </div>
 
 </div>
@@ -47,7 +47,7 @@
             {{form.username.label(
               class="form-label"
           )}}
-          {{form.username(class="form-control",value=name_to_update.name)}}
+          {{form.username(class="form-control",value=name_to_update.username)}}
           <br/>
             {{form.email.label(
                 class="form-label"
@@ -61,7 +61,7 @@
           <br/>
             {{form.submit(class="btn btn-primary btn-sm")}}
     
-            <a href="{{url_for('delete',id=name_to_update.id)}}" class="btn btn-danger btn-sm">Supprimer</a>
+            <a href="{{url_for('user_bp.delete',id=name_to_update.id)}}" class="btn btn-danger btn-sm">Supprimer</a>
     
         </form>
     </div>

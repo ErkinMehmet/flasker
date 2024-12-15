@@ -17,13 +17,13 @@
     <br/>
     {% for post in posts %}
     <div class="shadow p-3 mb-5 bg-body rounded">
-        <h2><a href="{{url_for('post',id=post.id)}}">{{post.title}}</a></h2>
+        <h2><a href="{{url_for('post_bp.post',id=post.id)}}">{{post.title}}</a></h2>
         <small>{{post.author}}</small><br/>
         {{post.slug}}<br/>
         {{post.date_posted}}<br/>
-        <a href="{{url_for('post',id=post.id)}}" class="btn btn-outline-primary btn-sm">Visualiser</a>
-        <a href="{{url_for('edit_post',id=post.id)}}" class="btn btn-outline-primary btn-sm">Éditer</a>
-        <a href="{{url_for('delete_post',id=post.id)}}" class="btn btn-outline-danger btn-sm">Supprimer</a>
+        <a href="{{url_for('post_bp.post',id=post.id)}}" class="btn btn-outline-primary btn-sm">Visualiser</a>
+        <a href="{{url_for('post_bp.edit_post',id=post.id)}}" class="btn btn-outline-primary btn-sm">Éditer</a>
+        <a href="{{url_for('post_bp.delete_post',id=post.id)}}" class="btn btn-outline-danger btn-sm">Supprimer</a>
     </div>
     {% endfor %}
     
