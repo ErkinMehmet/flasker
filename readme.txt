@@ -1,7 +1,7 @@
 Pour que les changements soit mis à jour automatiquement sans le besoin d'arrêter le site web
 
 $env:FLASK_ENV = "development"
-$env:FLASK_APP="hello.py"
+$env:FLASK_APP="app.py"
 flask run
 
 
@@ -32,4 +32,28 @@ git remote add origin git@github.com:ErkinMehmet/flasker.git
 git branch -M master
 git push -u origin master or git push -f origin master
 
+mettre à jour le code sur le serveur
 git pull origin master
+git add .
+git commit -am 'changements'
+git push
+
+
+Création de la bd dans le dossier instance
+from hello import app, db  # Import the app and db objects
+with app.app_context():
+    db.create_all()
+
+Migration de données avec flask
+flask db init
+flask db migrate -m 'initial migration'
+flask db upgrade
+
+Pour jouer avec la BD dans le terminal: (vu que le contexte de BD est dans une fonction, c'est plus compliqué)
+flask shell (PowerShell)
+(Python)
+from flasker.app improt create_app
+app=create_app()
+with app.app_context():
+    .....
+

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+{% endfor %}
+<div class="card">
+    <div class="card-header">
+        {{current_user.username}}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"> Bienvenue à votre profil</h5>
+        <p class="card-text">
+            <br/>
+            <strong>Nom:</strong>{{current_user.name}}<br/>
+            <strong>Nom d'utilisateur:</strong>{{current_user.username}}<br/>
+            <strong>Email:</strong>{{current_user.email}}<br/>
+            <strong>Couleur favorite:</strong>{{current_user.favorite_color}}<br/>
+            <strong>Date:</strong>{{current_user.createdAt}}<br/>
+        </p>
+        <a href="{{url_for('logout')}}" class="btn btn-secondary btn-sm">Déconnecter</a>
+        <a href="{{url_for('update',id=current_user.id)}}" class="btn btn-secondary btn-sm">Modifier le profil</a>
+        <a href="{{url_for('delete',id=current_user.id)}}" class="btn btn-danger btn-sm">Supprimer le profil</a>
+    </div>
+
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Modifier le profil
+    </div>
+    <div class="card-body">
+        <form action="/dashboard" method="POST">
+            {{form.hidden_tag()}}
+            {{form.name.label(
+                class="form-label"
+            )}}
+            {{form.name(class="form-control",value=name_to_update.name)}}
+            <br/>
+            {{form.username.label(
+              class="form-label"
+          )}}
+          {{form.username(class="form-control",value=name_to_update.name)}}
+          <br/>
+            {{form.email.label(
+                class="form-label"
+            )}}
+            {{form.email(class="form-control",value=name_to_update.email)}}
+            <br/>
+            {{form.favorite_color.label(
+              class="form-label"
+          )}}
+          {{form.favorite_color(class="form-control",value=name_to_update.favorite_color)}}
+          <br/>
+            {{form.submit(class="btn btn-primary btn-sm")}}
+    
+            <a href="{{url_for('delete',id=name_to_update.id)}}" class="btn btn-danger btn-sm">Supprimer</a>
+    
+        </form>
+    </div>
+
+</div>
+  
+
+{% endblock %}

@@ -1,6 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+
+
 <h1>Hello World!</h1>
 
-<p>C'est ma première page web</p>
+<p>C'est ma première page websfgfsgs23</p>
 
 <h2>{{nom}}</h2>
 
@@ -17,3 +29,4 @@
 <br/>
 
 {{pizzas.1}}
+{% endblock %}
