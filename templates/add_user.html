@@ -18,7 +18,7 @@
     <br/>
     
 {% else %}
-    <h1>Liste d'utilisateurs</h1>
+    <h2>Devenir membre</h2>
     <br/>
     <div class="shadow p-3 mb-5 bg-body rounded">
     <form method="POST">
@@ -44,6 +44,11 @@
       )}}
       {{form.favorite_color(class="form-control")}}
       <br/>
+      {{form.about_author.label(
+        class="form-label"
+    )}}
+    {{form.about_author(class="form-control")}}
+      <br/>
         {{form.password_hash.label(
           class="form-label"
       )}}
@@ -53,6 +58,11 @@
         class="form-label"
     )}}
     {{form.password_hash2(class="form-control")}}
+    <br/>
+      {{form.admin.label(
+        class="form-label"
+    )}}
+    {{form.admin()}}
       <br/>
         {{form.submit(class="btn btn-primary")}}
     </form>
@@ -76,7 +86,12 @@
       <tr>
           <th scope="row">{{our_user.id}}</th>
           <td><a href="{{url_for('user_bp.update',id=our_user.id)}}">{{our_user.name}}</a></td>
-          <td>{{our_user.username}}</td>
+          {% if our_user.admin %}
+          <td>{{our_user.username}} (Admin)</td>
+          {% else %}
+            <td>{{our_user.username}}</td>
+          {% endif %}
+          <td>{{our_user.email}}</td>
           <td>{{our_user.favorite_color}}</td>
           <td>{{our_user.createdAt.strftime('%Y-%m-%d %H:%M:%S')}}</td>
           <td><a href="{{url_for('user_bp.update',id=our_user.id)}}">Modifier</a>

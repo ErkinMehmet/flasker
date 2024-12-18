@@ -1,28 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Flasker</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <a class="navbar-brand" href="https://fqm.ca" target="_blank">
+    <img src="{{url_for('static',filename='images/FQM0.jpg')}}" alt="Brand Logo" style="width: 40px; height: 40px; border-radius: 50%;">
+</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="{{url_for('core_bp.index')}}">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item {% if request.endpoint == 'core_bp.index' %}active{% endif %}">
+          <a class="nav-link" href="{{url_for('core_bp.index')}}">Accueil <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url_for('test_bp.user',name='John')}}">Profil d'utilisateur</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{url_for('test_bp.name')}}"> Nom</a>
-        </li>
-        
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('core_bp.dashboard')}}">Accueil</a>
+          <a class="nav-link" href="{{url_for('core_bp.dashboard')}}">Profil</a>
       </li>
         <li class="nav-item">
           <a class="nav-link" href="{{url_for('core_bp.logout')}}"> Déonnexion</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('post_bp.add_post')}}"> Ajouter poste</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{url_for('admin_bp.admin')}}"> Admin</a>
+  </li>
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{{url_for('user_bp.add_user')}}"> Inscription</a>
@@ -31,30 +32,32 @@
         <a class="nav-link" href="{{url_for('core_bp.login')}}"> Connexion</a>
     </li>
       {% endif %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{url_for('post_bp.add_post')}}"> Ajouter poste</a>
-      </li>
+        
       <li class="nav-item">
         <a class="nav-link" href="{{url_for('post_bp.posts')}}"> Postes</a>
     </li>
+    {% if current_user.id==1 %}
+    
+    {% endif %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
+            Présentation
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Énoncé</a>
+            
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="#">Évolution</a>
+            <a class="dropdown-item" href="#">Projets</a>
+            <a class="dropdown-item" href="#">Habiletés</a>
+            <a class="dropdown-item" href="#">Accomplissements</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('post_bp.search')}}" class="d-flex" >
+        {{form.hidden_tag()}}
+        <input class="form-control mr-sm-2" type="search" placeholder="Écrire un mot clé" aria-label="Search" name="searched">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Chercher</button>
       </form>
     </div>
   </nav>

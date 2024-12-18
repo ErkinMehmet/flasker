@@ -159,7 +159,6 @@ def create_app(env: AppEnvironment = None) -> Flask:
         #return "<h1>hello world!</h1>"
     def index():
         moi="Fernando"
-        flash("Bienvenue au site de Fernando2")
         stuff="C'est la m<strong>**de</strong>"
         pizzas=['Pepe','Fromage','Coco',41]
         return render_template("index.html",nom=moi,contenu=stuff,pizzas=pizzas)

@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="carousel-container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 carousel-subcontainer">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">City</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>John Doe</td>
+                    <td>28</td>
+                    <td>New York</td>
+                  </tr>
+                  <tr>
+                    <td>Jane Smith</td>
+                    <td>34</td>
+                    <td>Los Angeles</td>
+                  </tr>
+                  <tr>
+                    <td>Michael Johnson</td>
+                    <td>45</td>
+                    <td>Chicago</td>
+                  </tr>
+                  <tr>
+                    <td>Amanda Lee</td>
+                    <td>29</td>
+                    <td>Miami</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+        </div>
+      <!-- Carousel Container (Right Half of the Screen) -->
+      <div class="col-md-6 carousel-subcontainer">
+    <div class="evocard-container active">
+      <div class="evocard" onclick="flipCard(this)">
+        <!-- Front: Then (Past) -->
+        <div class="evocard-front">
+          <h2>Then (Past)</h2>
+          <p>Skills: HTML, Basic JavaScript0</p>
+          <p>Projects: Simple static websites</p>
+          <img src="path_to_image_before.jpg" alt="Past Image" width="100%">
+        </div>
+  
+        <!-- Back: Now (Present) -->
+        <div class="evocard-back">
+          <h2>Now (Present)</h2>
+          <p>Skills: Full-stack development, Vue.js, API integrations</p>
+          <p>Projects: Complex dynamic web applications</p>
+          <img src="path_to_image_after.jpg" alt="Present Image" width="100%">
+        </div>
+      </div>
+    </div>
+  
+    <div class="evocard-container" >
+      <div class="evocard" onclick="flipCard(this)">
+        <!-- Front: Then (Past) -->
+        <div class="evocard-front">
+          <h2>Then (Past)</h2>
+          <p>Skills: HTML, Basic JavaScript1</p>
+          <p>Projects: Simple static websites</p>
+          <img src="path_to_image_before.jpg" alt="Past Image" width="100%">
+        </div>
+  
+        <!-- Back: Now (Present) -->
+        <div class="evocard-back">
+          <h2>Now (Present)</h2>
+          <p>Skills: Full-stack development, Vue.js, API integrations</p>
+          <p>Projects: Complex dynamic web applications</p>
+          <img src="path_to_image_after.jpg" alt="Present Image" width="100%">
+        </div>
+      </div>
+    </div>
+    <div class="evocard-container" >
+        <div class="evocard" onclick="flipCard(this)">
+          <!-- Front: Then (Past) -->
+          <div class="evocard-front">
+            <h2>Then (Past)</h2>
+            <p>Skills: HTML, Basic JavaScript2</p>
+            <p>Projects: Simple static websites</p>
+            <img src="path_to_image_before.jpg" alt="Past Image" width="100%">
+          </div>
+    
+          <!-- Back: Now (Present) -->
+          <div class="evocard-back">
+            <h2>Now (Present)</h2>
+            <p>Skills: Full-stack development, Vue.js, API integrations</p>
+            <p>Projects: Complex dynamic web applications</p>
+            <img src="path_to_image_after.jpg" alt="Present Image" width="100%">
+          </div>
+        </div>
+      </div><div class="evocard-container" >
+        <div class="evocard" onclick="flipCard(this)">
+          <!-- Front: Then (Past) -->
+          <div class="evocard-front">
+            <h2>Then (Past)</h2>
+            <p>Skills: HTML, Basic JavaScript3</p>
+            <p>Projects: Simple static websites</p>
+            <img src="path_to_image_before.jpg" alt="Past Image" width="100%">
+          </div>
+    
+          <!-- Back: Now (Present) -->
+          <div class="evocard-back">
+            <h2>Now (Present)</h2>
+            <p>Skills: Full-stack development, Vue.js, API integrations</p>
+            <p>Projects: Complex dynamic web applications</p>
+            <img src="path_to_image_after.jpg" alt="Present Image" width="100%">
+          </div>
+        </div>
+      </div><div class="evocard-container" >
+        <div class="evocard" onclick="flipCard(this)">
+          <!-- Front: Then (Past) -->
+          <div class="evocard-front">
+            <h2>Then (Past)</h2>
+            <p>Skills: HTML, Basic JavaScrip4t</p>
+            <p>Projects: Simple static websites</p>
+            <img src="path_to_image_before.jpg" alt="Past Image" width="100%">
+          </div>
+    
+          <!-- Back: Now (Present) -->
+          <div class="evocard-back">
+            <h2>Now (Present)</h2>
+            <p>Skills: Full-stack development, Vue.js, API integrations</p>
+            <p>Projects: Complex dynamic web applications</p>
+            <img src="path_to_image_after.jpg" alt="Present Image" width="100%">
+          </div>
+        </div>
+      </div><div class="evocard-container" >
+        <div class="evocard" onclick="flipCard(this)">
+          <!-- Front: Then (Past) -->
+          <div class="evocard-front">
+            <h2>Then (Past)</h2>
+            <p>Skills: HTML, Basic JavaScript5</p>
+            <p>Projects: Simple static websites</p>
+            <img src="path_to_image_before.jpg" alt="Past Image" width="100%">
+          </div>
+    
+          <!-- Back: Now (Present) -->
+          <div class="evocard-back">
+            <h2>Now (Present)</h2>
+            <p>Skills: Full-stack development, Vue.js, API integrations</p>
+            <p>Projects: Complex dynamic web applications</p>
+            <img src="path_to_image_after.jpg" alt="Present Image" width="100%">
+          </div>
+        </div>
+      </div><div class="evocard-container" >
+        <div class="evocard" onclick="flipCard(this)">
+          <!-- Front: Then (Past) -->
+          <div class="evocard-front">
+            <h2>Then (Past)</h2>
+            <p>Skills: HTML, Basic JavaScript</p>
+            <p>Projects: Simple static websites</p>
+            <img src="path_to_image_before.jpg" alt="Past Image" width="100%">
+          </div>
+    
+          <!-- Back: Now (Present) -->
+          <div class="evocard-back">
+            <h2>Now (Present)</h2>
+            <p>Skills: Full-stack development, Vue.js, API integrations</p>
+            <p>Projects: Complex dynamic web applications</p>
+            <img src="path_to_image_after.jpg" alt="Present Image" width="100%">
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+    <!-- Add more evocard-containers as needed -->
+  
+    <!-- Navigation Arrows -->
+    <button class="nav-arrow prev" onclick="moveCarousel('prev')">&#8592;</button>
+    <button class="nav-arrow next" onclick="moveCarousel('next')">&#8594;</button>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+function flipCard(card) {
+  if (card.parentNode.classList.contains('active')) {
+    card.classList.toggle('flipped');
+  }
+}
+
+function setActive(element) {
+    const containers = document.querySelectorAll('.evocard-container');
+    containers.forEach((container, index) => {
+      container.classList.remove('active');
+      const card= container.querySelectorAll('.evocard')[0];
+      card.classList.remove('flipped');
+      container.style.opacity = 0.1;
+      container.style.transform = `rotateY(${(index - currentIndex) * 15}deg) translateZ(200px)`;
+    });
+
+    // Add active class to the new container
+    element.classList.add('active');
+    element.style.opacity = 1;
+    element.style.transform = `rotateY(0deg) translateZ(300px)`; // Bring active container closer
+    currentIndex = [...containers].indexOf(element);
+  }
+  
+    let currentIndex = 0;
+    
+    function moveCarousel(direction) {
+    const containers = document.querySelectorAll('.evocard-container');
+    const totalContainers = containers.length;
+
+    // Remove active class from current
+    containers[currentIndex].classList.remove('active');
+    
+    // Update the current index based on the direction
+    if (direction === 'next') {
+      currentIndex = (currentIndex + 1) % totalContainers;
+    } else {
+      currentIndex = (currentIndex - 1 + totalContainers) % totalContainers;
+    }
+
+    // Add active class to the new container
+    setActive(containers[currentIndex])
+  }
+  </script>
+  {% endblock %}

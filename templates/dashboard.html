@@ -13,31 +13,43 @@
 {% endfor %}
 <div class="card">
     <div class="card-header">
-        {{current_user.username}}
+        <h5>Bonjour, {{current_user.username}}</h5>
     </div>
-    <div class="card-body">
-        <h5 class="card-title"> Bienvenue à votre profil</h5>
         <p class="card-text">
-            <br/>
-            <strong>Nom:</strong>{{current_user.name}}<br/>
-            <strong>Nom d'utilisateur:</strong>{{current_user.username}}<br/>
-            <strong>Email:</strong>{{current_user.email}}<br/>
-            <strong>Couleur favorite:</strong>{{current_user.favorite_color}}<br/>
-            <strong>Date:</strong>{{current_user.createdAt}}<br/>
-        </p>
-        <a href="{{url_for('core_bp.logout')}}" class="btn btn-secondary btn-sm">Déconnecter</a>
+            <div class="container">
+                <div class="row">
+                <div class="col-8">
+            <strong>Nom: </strong>{{current_user.name}}<br/>
+            <strong>Nom d'utilisateur: </strong>{{current_user.username}}<br/>
+            <strong>Email: </strong> {{current_user.email}}<br/>
+            <strong>Couleur favorite: </strong>{{current_user.favorite_color}}<br/>
+            <strong>Description: </strong>{{current_user.about_author}}<br/>
+            <strong>Date: </strong>{{current_user.createdAt}}<br/>
+            <a href="{{url_for('core_bp.logout')}}" class="btn btn-secondary btn-sm">Déconnecter</a>
         <a href="{{url_for('user_bp.update',id=current_user.id)}}" class="btn btn-secondary btn-sm">Modifier le profil</a>
         <a href="{{url_for('user_bp.delete',id=current_user.id)}}" class="btn btn-danger btn-sm">Supprimer le profil</a>
+        
+        </div>
+        <div class="col-4">
+            {% if current_user.profile_pic %}
+            <img src="{{url_for('static',filename='images/'+current_user.profile_pic)}}" width="200" align="right"/>
+            {% else %}
+            <img src="{{url_for('static',filename='images/0.png')}}" width="200" align="right"/>
+            {% endif %}
+        </div>
+        </div>                    
+        </div>
+        </p>
+        
     </div>
-
 </div>
 
 <div class="card">
     <div class="card-header">
-        Modifier le profil
+        <h5>Modifier le profil</h5>
     </div>
     <div class="card-body">
-        <form action="/dashboard" method="POST">
+        <form action="/dashboard" method="POST" enctype="multipart/form-data">
             {{form.hidden_tag()}}
             {{form.name.label(
                 class="form-label"
@@ -59,9 +71,21 @@
           )}}
           {{form.favorite_color(class="form-control",value=name_to_update.favorite_color)}}
           <br/>
+            {{form.about_author.label(
+              class="form-label"
+          )}}
+          <textarea name="about_author" class="form-control">{{name_to_update.about_author}}</textarea>
+          <br/>
+            {{form.profile_pic.label(
+              class="form-label"
+          )}}
+          {{form.profile_pic(class="form-control",value=name_to_update.favorite_color)}}
+          <br/>
             {{form.submit(class="btn btn-primary btn-sm")}}
     
             <a href="{{url_for('user_bp.delete',id=name_to_update.id)}}" class="btn btn-danger btn-sm">Supprimer</a>
+
+            
     
         </form>
     </div>

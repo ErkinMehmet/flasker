@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<br/>
+
+    <h1>Vous avez cherché: <em>{{searched}}</em></h1>
+    <br/>
+    {% if posts %}
+    {% for post in posts %}
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <h2>{{post.title}}</h2>
+            <small>{{post.poster.name}}</small><br/>
+            {{post.slug}}<br/>
+            {{post.date_posted}}<br/>
+
+            {{post.content}}<br/>
+            
+        </div>
+        <a href="{{url_for('post_bp.edit_post',id=post.id)}}" class="btn btn-outline-primary btn-sm">Éditer</a>
+        {% if post.poster_id==current_user.id %}
+        <a href="{{url_for('post_bp.delete_post',id=post.id)}}" class="btn btn-outline-danger btn-sm">Supprimer</a>
+        <a href="{{url_for('post_bp.posts')}}" class="btn btn-outline-primary btn-sm">Retourner</a>
+        {% endif %}
+
+
+    {% endfor %}
+    {% else %}
+        <p>rien trouvé</p>
+    {% endif %}
+
+{% endblock %}

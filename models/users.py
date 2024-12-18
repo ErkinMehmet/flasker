@@ -3,6 +3,7 @@ from flasker.app import db
 from flask_login import LoginManager,login_required,UserMixin,logout_user,current_user,login_user
 from werkzeug.security import generate_password_hash,check_password_hash
 
+
 class Users(db.Model,UserMixin):
     id=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String(20),nullable=False,unique=True)
@@ -12,6 +13,10 @@ class Users(db.Model,UserMixin):
     createdAt=db.Column(db.DateTime,default=datetime.now())
     #mdp
     password_hash=db.Column(db.String(1028),nullable=False)
+    posts=db.relationship('Posts',backref='poster')
+    admin = db.Column(db.Boolean, default=False)
+    about_author=db.Column(db.Text(500),nullable=True)
+    profile_pic=db.Column(db.String(1028),nullable=True)
 
     @property
     def password(self):

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash
-from flasker.app import db
+from flasker.app import db,admin_required
 from flasker.models import Users
 from flasker.forms import UserForm,PwdForm
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -19,18 +19,22 @@ def add_user():
         if user is None:
             # hasher le mdp
             hashed_pw=generate_password_hash(form.password_hash.data)
-            user=Users(name=form.name.data,username=form.username.data,email=form.email.data,favorite_color=form.favorite_color.data,password_hash=hashed_pw)
+            user=Users(name=form.name.data,username=form.username.data,email=form.email.data,favorite_color=form.favorite_color.data,about_author=form.about_author.data,password_hash=hashed_pw,admin=form.admin.data)
             db.session.add(user)
             db.session.commit()
+            flash("Formulaire soumis avec succès.")
+        else:
+            flash("Le mail existe déjà.")
         name=form.name.data
         email=form.email.data
         form.name.data=''
         form.username.data=''
         form.email.data=''
         form.favorite_color.data=''
+        form.about_author.data=''
         form.password_hash.data=''
         form.password_hash2.data=''
-        flash("Formulaire soumis avec succès.")
+        
     our_users=Users.query.order_by(Users.createdAt)
     return render_template("add_user.html",name=name,email=email,form=form,our_users=our_users)
 
@@ -46,6 +50,8 @@ def update(id):
         name_to_update.username=request.form['username']
         name_to_update.email=request.form['email']
         name_to_update.favorite_color=request.form['favorite_color']
+        name_to_update.admin=request.form['admin']
+        name_to_update.about_author=request.form['about_author']
         try:
             db.session.commit()
             flash("Utilisateur mis à jour avec succès.")
@@ -60,6 +66,7 @@ def update(id):
 
 @user_bp.route('/delete/<int:id>',methods=['GET','POST'])
 @login_required
+@admin_required
 def delete(id):
     name=None
     form=UserForm()

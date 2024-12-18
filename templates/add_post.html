@@ -22,11 +22,6 @@
             class="form-label"
         )}}
         {{form.title(class="form-control")}}
-        <br/>
-        {{form.author.label(
-            class="form-label"
-        )}}
-        {{form.author(class="form-control")}}
         
         <br/>
         {{form.slug.label(
@@ -41,6 +36,8 @@
       <br/>
         {{form.submit(class="btn btn-primary")}}
     </form>
+    {{ckeditor.load()}}
+    {{ckeditor.config(name='content')}}
     </div>
 <br/><br/><br/>
 {% else %}

@@ -1,4 +1,4 @@
-from flask import Flask,render_template,flash,request,redirect,url_for
+from flask import Flask,render_template,flash,request,redirect,url_for,abort
 from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField,PasswordField,BooleanField,ValidationError
 from wtforms.validators import DataRequired,EqualTo,Length
@@ -11,8 +11,9 @@ from datetime import date
 from werkzeug.security import generate_password_hash,check_password_hash
 from wtforms.widgets import TextArea
 from flask_login import LoginManager,login_required,UserMixin,logout_user,current_user,login_user
-from flasker.forms import UserForm,LoginForm,PostForm,PwdForm,NamerForm
-
+from flasker.forms import UserForm,LoginForm,PostForm,PwdForm,NamerForm,SearchForm
+from flask_ckeditor import CKEditor
+from functools import wraps
 
 @dataclass
 class AppEnvironment:
@@ -22,9 +23,16 @@ class AppEnvironment:
 db=SQLAlchemy()
 migrate=Migrate()
 login_manager=LoginManager()
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.admin:
+            abort(403)   # or another page like login or an error page
+        return f(*args, **kwargs)
+    return decorated_function
 
-from flasker.models import Posts,Users
-from flasker.routes import user_bp,post_bp,test_bp,core_bp
+from flasker.models import Posts,Users,Articles
+from flasker.routes import user_bp,post_bp,test_bp,core_bp,admin_bp
 
 def create_app(env: AppEnvironment = None) -> Flask:
     if env is None:
@@ -33,28 +41,25 @@ def create_app(env: AppEnvironment = None) -> Flask:
 
     # créer une instance
     app=Flask(__name__)
-
+    ckeditor=CKEditor(app)
     # ajouter la bd SQLite
     #app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///users.db'
     #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # ajouter la bd MySQL
     app.config['SQLALCHEMY_DATABASE_URI']=os.getenv('SQLALCHEMY_DATABASE_URI')#mysql+pymysql://root:Fqm123!@localhost/users'#
     app.config['SECRET_KEY']= os.getenv('SECRET_KEY')
-    
+    app.config['UPLOAD_FOLDER']= os.getenv('UPLOAD_FOLDER', 'static/images/')
+    app.config['NAME']= os.getenv('NAME')
+    app.config['TITLE']= os.getenv('TITLE')
+    app.config['DESCRIPTION']= os.getenv('DESCRIPTION')
+    app.config['SITEPHP']= os.getenv('SITEPHP','http://localhost:8000/')
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
     #db=SQLAlchemy(app)
     #migrate=Migrate(app,db)
 
-    @app.route('/date')
-    def get_curr_date():
-        fav={
-            "John":"kk",
-            "Maria":"funny"
-        }
-        return {"Date":date.today(),
-                "Fav":fav} # dic = json en Python
+    
 
     # Flask login
     login_manager.init_app(app)
@@ -62,12 +67,17 @@ def create_app(env: AppEnvironment = None) -> Flask:
     @login_manager.user_loader
     def load_user(user_id):
         return Users.query.get(int(user_id))
+    
 
     app.register_blueprint(user_bp)
     app.register_blueprint(post_bp)
     app.register_blueprint(test_bp)
     app.register_blueprint(core_bp)
+    app.register_blueprint(admin_bp)
 
+    @app.context_processor
+    def base():
+        form=SearchForm()
+        return dict(form=form)
     
-
     return app

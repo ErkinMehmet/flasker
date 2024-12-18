@@ -13,7 +13,7 @@
 {% endfor %}
 
 {% if p==1 %}
-    <h1> Utilisateur {{name_to_update.name}} mis à jour!!</h1>
+    <h1> Modifier l'uilisateur {{name_to_update.name}}</h1>
     <br/>
     <table class="table table-hover table-bordered">
         <thead>
@@ -39,37 +39,57 @@
         </tbody>
       </table>
 {% else %}
-    <h1>Liste d'utilisateurs</h1>
-    <br/>
-    <div class="shadow p-3 mb-5 bg-body rounded">
-    <form action="/update/{{name_to_update.id}}" method="POST">
-        {{form.hidden_tag()}}
-        {{form.name.label(
+      {% if name_to_update.id==current_user.id %}
+      <h1>Liste d'utilisateurs</h1>
+      <br/>
+      <div class="shadow p-3 mb-5 bg-body rounded">
+      <form action="/update/{{name_to_update.id}}" method="POST">
+          {{form.hidden_tag()}}
+          {{form.name.label(
+              class="form-label"
+          )}}
+          {{form.name(class="form-control",value=name_to_update.name)}}
+          <br/>
+          {{form.username.label(
             class="form-label"
         )}}
-        {{form.name(class="form-control",value=name_to_update.name)}}
+        {{form.username(class="form-control",value=name_to_update.name)}}
         <br/>
-        {{form.username.label(
-          class="form-label"
-      )}}
-      {{form.username(class="form-control",value=name_to_update.name)}}
-      <br/>
-        {{form.email.label(
+          {{form.email.label(
+              class="form-label"
+          )}}
+          {{form.email(class="form-control",value=name_to_update.email)}}
+          <br/>
+          {{form.favorite_color.label(
             class="form-label"
         )}}
-        {{form.email(class="form-control",value=name_to_update.email)}}
+        {{form.favorite_color(class="form-control",value=name_to_update.favorite_color)}}
         <br/>
-        {{form.favorite_color.label(
+            {{form.about_author.label(
+              class="form-label"
+          )}}
+          <textarea name="about_author" class="form-control">{{name_to_update.about_author}}</textarea>
+        <br/>
+        {{form.profile_pic.label(
           class="form-label"
       )}}
-      {{form.favorite_color(class="form-control",value=name_to_update.favorite_color)}}
+      {{form.profile_pic(class="form-control",value=name_to_update.favorite_color)}}
       <br/>
-        {{form.submit(class="btn btn-primary")}}
+          {{form.submit(class="btn btn-primary")}}
 
-        <a href="{{url_for('user_bp.delete',id=name_to_update.id)}}" class="btn btn-danger">Supprimer</a>
+          <a href="{{url_for('user_bp.delete',id=name_to_update.id)}}" class="btn btn-danger">Supprimer</a>
 
-    </form>
-    </div>
-<br/><br/><br/>
+      </form>
+      </div>
+      <br/><br/><br/>
+      {% else %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Désolé; vous ne pouvez pas modifier le profil de cet utilisateur.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      {% endif %}
 {% endif %}
 {% endblock %}

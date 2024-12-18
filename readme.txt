@@ -57,3 +57,7 @@ app=create_app()
 with app.app_context():
     .....
 
+créer le Procfile
+echo web: gunicorn app:app > Procfile
+
+heroku login

@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash
 from flasker.forms import NamerForm
+from datetime import date
 test_bp = Blueprint('test_bp', __name__)
 
 @test_bp.route('/user/<name>')
@@ -18,3 +19,12 @@ def name():
         form.name.data=''
         flash("Formulaire soumis avec succès.")
     return render_template("name.html",name=name,form=form)
+
+@test_bp.route('/date')
+def get_curr_date():
+    fav={
+        "John":"kk",
+        "Maria":"funny"
+    }
+    return {"Date":date.today(),
+            "Fav":fav} # dic = json en Python
