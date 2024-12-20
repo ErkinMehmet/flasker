@@ -15,8 +15,9 @@ admin_bp = Blueprint('admin_bp', __name__)
 @login_required
 def admin():
     id=current_user.id
-    if id==1:
-        return render_template("admin.html")
+    if current_user.admin==1:
+        our_users=Users.query.order_by(Users.createdAt)
+        return render_template("admin.html",our_users=our_users)
     else:
         flash("Cette page est réservée pour les admins")
         return redirect(url_for('core_bp.login'))

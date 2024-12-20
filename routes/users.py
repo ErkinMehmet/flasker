@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash,redirect,url_for
 from flasker.app import db,admin_required
 from flasker.models import Users
 from flasker.forms import UserForm,PwdForm
 from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import login_required
+from flask_login import login_required,current_user
 
 # Create a Blueprint for user routes
 user_bp = Blueprint('user_bp', __name__)
@@ -13,30 +13,32 @@ def add_user():
     name=None
     email=None
     form=UserForm()
+    err=''
     # valider
     if form.validate_on_submit():
         user=Users.query.filter_by(email=form.email.data).first()
         if user is None:
             # hasher le mdp
             hashed_pw=generate_password_hash(form.password_hash.data)
-            user=Users(name=form.name.data,username=form.username.data,email=form.email.data,favorite_color=form.favorite_color.data,about_author=form.about_author.data,password_hash=hashed_pw,admin=form.admin.data)
+            user=Users(name=form.name.data,username=form.username.data,email=form.email.data,favorite_color='red',about_author=form.about_author.data,password_hash=hashed_pw,admin=form.admin.data)
             db.session.add(user)
             db.session.commit()
-            flash("Formulaire soumis avec succès.")
+            flash("Formulaire soumis avec succès.", "success")
         else:
-            flash("Le mail existe déjà.")
+            err="Le mail existe déjà."
+            flash(err, "warning")
+            
         name=form.name.data
         email=form.email.data
         form.name.data=''
         form.username.data=''
         form.email.data=''
-        form.favorite_color.data=''
         form.about_author.data=''
         form.password_hash.data=''
         form.password_hash2.data=''
         
     our_users=Users.query.order_by(Users.createdAt)
-    return render_template("add_user.html",name=name,email=email,form=form,our_users=our_users)
+    return render_template("add_user.html",name=name,email=email,form=form,our_users=our_users,error=err)
 
 # mettre à jour la bd
 @user_bp.route('/update/<int:id>',methods=['GET','POST'])
@@ -49,15 +51,25 @@ def update(id):
         name_to_update.name=request.form['name']
         name_to_update.username=request.form['username']
         name_to_update.email=request.form['email']
-        name_to_update.favorite_color=request.form['favorite_color']
-        name_to_update.admin=request.form['admin']
+        name_to_update.favorite_color='Bleu'
         name_to_update.about_author=request.form['about_author']
+        admin_value = request.form.get('admin')
+        if admin_value == 'on':  # 'on' is the default value for checked checkboxes
+            name_to_update.admin = True
+        else:
+            name_to_update.admin = False
+            
         try:
             db.session.commit()
             flash("Utilisateur mis à jour avec succès.")
             our_users=Users.query.order_by(Users.createdAt)
             post=1
-            return render_template("update.html",form=form,name_to_update=name_to_update,our_users=our_users,p=1)
+            if current_user.id==name_to_update.id:
+                return redirect(url_for('core_bp.dashboard'))
+            elif current_user.admin:
+                return redirect(url_for('admin_bp.admin'))
+            else:
+                return render_template("update.html",form=form,name_to_update=name_to_update,our_users=our_users,p=1)
         except:
             flash("Erreur inattendue.")
             return render_template("update.html",form=form,name_to_update=name_to_update,our_users=our_users,p=2)

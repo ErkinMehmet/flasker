@@ -52,7 +52,7 @@ flask db upgrade
 Pour jouer avec la BD dans le terminal: (vu que le contexte de BD est dans une fonction, c'est plus compliqué)
 flask shell (PowerShell)
 (Python)
-from flasker.app improt create_app
+from flasker.app import create_app
 app=create_app()
 with app.app_context():
     .....

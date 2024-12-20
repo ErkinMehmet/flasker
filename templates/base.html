@@ -362,7 +362,7 @@
       top: 0;
       left: 0;
       width: 100vw;
-      height: 100vh;
+      height: 1500px;
       background-size: 100% auto; /* Stretch to fit width, auto height */
       background-repeat: repeat-y !important; /* Repeat vertically */
       background-position: top;
@@ -380,7 +380,7 @@
 .othercontent {
       z-index: 1;
       position: relative;
-      padding: 0; /* Removes padding on all sides */
+      padding: 0 20%; /* Removes padding on all sides */
             margin: 0;  /* Removes default margin */
             width: 100%; /* Ensures full width */
     }
@@ -390,6 +390,79 @@
   z-index: 10;         /* Make sure the navbar is above the wave */
 }
 
+/* Custom Button Styling */
+.custom-btn {
+    width: 70%; /* Occupy 70% of the container */
+    margin: 0 auto; /* Center horizontally */
+    background-color: #f5f5f5; /* Greyish white */
+    color: #333; /* Dark text color */
+    border: none; /* No border */
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-align: center;
+    position: relative; /* Needed for pseudo-elements */
+    overflow: hidden; /* Hide animation overflow */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.3s ease; /* Smooth transitions */
+    cursor: pointer; 
+}
+
+/* Hover and focus effects */
+.custom-btn:hover {
+    background-color: #eaeaea; /* Slightly darker grey on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Bigger shadow on hover */
+    transform: scale(1.05);
+}
+
+/* Pseudo-element for border animation */
+.custom-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%; /* Start from the center */
+    height: 100%;
+    width: 0%; /* Start with zero width */
+    z-index: 1;
+    transition: all 0.4s ease; /* Smooth width expansion */
+}
+
+/* Animation on hover */
+.custom-btn:hover::before {
+    left: 0; /* Expand from left edge */
+    width: 100%; /* Expand to full width */
+    opacity: 0; /* Fade out after expansion */
+    transition: width 0.4s ease, opacity 0.2s ease 0.4s; /* Smooth transition */
+}
+
+/* Ensure content is on top */
+.custom-btn span {
+    position: relative; /* Bring text on top */
+    z-index: 2;
+}
+
+
+.post-title-link {
+    color: black;               /* Make the text black */
+    font-weight: bold;          /* Make the text bold */
+    text-decoration: none;      /* Remove underline */
+    cursor: pointer;           /* Change cursor to pointer on hover */
+  }
+
+  .post-title-link:hover {
+    text-decoration: none;      /* Ensure no underline on hover */
+  }
+
+  .d-flex {
+    display: flex;
+  }
+
+  .justify-content-end {
+    justify-content: flex-end;
+  }
+  .post-title-link:hover {
+  text-decoration: none;      /* Ensure no underline on hover */
+}
     </style>
   </head>
   <body>
@@ -403,8 +476,20 @@
     </div>
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+          const overlay = document.querySelector(".background-overlay");
+          const bodyHeight = document.body.scrollHeight; // Total height of the document
+          overlay.style.height = `${bodyHeight}px`; // Set the height of the background
+      });
+  
+      // Recalculate height on window resize
+      window.addEventListener("resize", () => {
+          const overlay = document.querySelector(".background-overlay");
+          const bodyHeight = document.body.scrollHeight;
+          overlay.style.height = `${bodyHeight}px`;
+      });
+  </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -454,11 +539,11 @@
       <div class="col-md-3">
         <h5>Médias sociaux</h5>
         <ul class="list-unstyled d-flex">
-          <li><a href="#" class="text-white mr-3"><i class="fab fa-facebook-f"></i></a></li>
-          <li><a href="#" class="text-white mr-3"><i class="fab fa-twitter"></i></a></li>
-          <li><a href="#" class="text-white mr-3"><i class="fab fa-instagram"></i></a></li>
-          <li><a href="#" class="text-white mr-3"><i class="fab fa-linkedin-in"></i></a></li>
-          <li><a href="#" class="text-white mr-3"><i class="fab fa-github"></i></a></li> <!-- Added GitHub link -->
+          <li><a href="https://www.facebook.com/login" class="text-white mr-3"><i class="fab fa-facebook-f"></i></a></li>
+          <li><a href="https://x.com/?lang=en" class="text-white mr-3"><i class="fab fa-twitter"></i></a></li>
+          <li><a href="https://www.instagram.com/" class="text-white mr-3"><i class="fab fa-instagram"></i></a></li>
+          <li><a href="https://www.linkedin.com/in/fernando-h-li-226175108/" class="text-white mr-3"><i class="fab fa-linkedin-in"></i></a></li>
+          <li><a href="https://github.com/ErkinMehmet" class="text-white mr-3"><i class="fab fa-github"></i></a></li> <!-- Added GitHub link -->
         </ul>
       </div>
     </div>

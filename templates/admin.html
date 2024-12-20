@@ -1,8 +1,49 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <br/>
 
-    <h2>Administration</h>
 
+<!-- Card for the table -->
+<div class="card">
+    <div class="card-header">
+        <h4>Liste des utilisateurs</h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Nom d'Utilisateur</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Couleur favorite</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for our_user in our_users %}
+                <tr>
+                    <th scope="row">{{our_user.id}}</th>
+                    <td><a href="{{url_for('user_bp.update',id=our_user.id)}}">{{our_user.name}}</a></td>
+                    {% if our_user.admin %}
+                    <td>{{our_user.username}} (Admin)</td>
+                    {% else %}
+                    <td>{{our_user.username}}</td>
+                    {% endif %}
+                    <td>{{our_user.email}}</td>
+                    <td>{{our_user.favorite_color}}</td>
+                    <td>{{our_user.createdAt.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                    <td>
+                        <a href="{{url_for('user_bp.update',id=our_user.id)}}" class="btn btn-secondary btn-sm">Modifier</a>
+                        <a href="{{url_for('user_bp.delete',id=our_user.id)}}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
 {% endblock %}

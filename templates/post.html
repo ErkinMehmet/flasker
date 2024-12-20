@@ -11,19 +11,17 @@
 
 
 {% endfor %}
-
-
-    <h1>Postes de blog</h1>
-    <br/>
-    <div class="shadow p-3 mb-5 bg-body rounded">
-        <h2>{{post.title}}</h2>
-        <small>{{post.poster.name}}</small><br/>
+<div class="card shadow p-3 mb-5 bg-body rounded">
+  <div class="card-body">
+        <h4 class="card-title">{{post.title}}</h4>
+        <small class="text-muted">{{post.poster.name}} - {{post.date_posted}}</small><hr/>
+        <div class="card-text">
         {{post.slug}}<br/>
-        {{post.date_posted}}<br/>
-
-        {{post.content|safe}}<br/>
-
         
+
+        {{post.content|safe}}
+      </div>
+      <br/><br/>
         <div class="card mb-3">
           <div class="row no-gutters">
             <div class="col-md-2">
@@ -51,13 +49,16 @@
         </div>
         
     </div>
-    
-    {% if post.poster_id==current_user.id %}
+  </div>
+  <div class="p-2">
+  {% if post.poster_id==current_user.id %}
     <a href="{{url_for('post_bp.edit_post',id=post.id)}}" class="btn btn-outline-primary btn-sm">Éditer</a>
       <a href="{{url_for('post_bp.delete_post',id=post.id)}}" class="btn btn-outline-danger btn-sm">Supprimer</a>
      
     {% endif %}
-    <a href="{{url_for('post_bp.posts')}}" class="btn btn-outline-primary btn-sm">Retourner</a>
+    <a href="{{url_for('post_bp.posts')}}" class="btn btn-outline-primary btn-sm">Retourner</a></div>
+</div>
+    
 <br/><br/><br/>
 
 {% endblock %}

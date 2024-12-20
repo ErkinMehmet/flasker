@@ -13,8 +13,6 @@
 {% endfor %}
 
 {% if p==1 %}
-    <h1> Modifier l'uilisateur {{name_to_update.name}}</h1>
-    <br/>
     <table class="table table-hover table-bordered">
         <thead>
           <tr>
@@ -53,7 +51,7 @@
           {{form.username.label(
             class="form-label"
         )}}
-        {{form.username(class="form-control",value=name_to_update.name)}}
+        {{form.username(class="form-control",value=name_to_update.username)}}
         <br/>
           {{form.email.label(
               class="form-label"
@@ -75,6 +73,11 @@
       )}}
       {{form.profile_pic(class="form-control",value=name_to_update.favorite_color)}}
       <br/>
+      {{form.admin.label(
+        class="form-label"
+    )}}
+    {{form.admin(checked=name_to_update.admin)}}
+      <br/><br/>
           {{form.submit(class="btn btn-primary")}}
 
           <a href="{{url_for('user_bp.delete',id=name_to_update.id)}}" class="btn btn-danger">Supprimer</a>

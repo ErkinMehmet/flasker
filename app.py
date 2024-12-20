@@ -15,6 +15,9 @@ from flasker.forms import UserForm,LoginForm,PostForm,PwdForm,NamerForm,SearchFo
 from flask_ckeditor import CKEditor
 from functools import wraps
 
+from flasker.regressors.dt import train_dt_predictor
+from flasker.regressors.predictor import Prediction, Predictor
+from flasker.clustering.kmeanscluster import initiate_kmc_predictor
 @dataclass
 class AppEnvironment:
     api_key: str
@@ -32,7 +35,7 @@ def admin_required(f):
     return decorated_function
 
 from flasker.models import Posts,Users,Articles
-from flasker.routes import user_bp,post_bp,test_bp,core_bp,admin_bp
+from flasker.routes import user_bp,post_bp,test_bp,core_bp,admin_bp,api_bp
 
 def create_app(env: AppEnvironment = None) -> Flask:
     if env is None:
@@ -53,13 +56,14 @@ def create_app(env: AppEnvironment = None) -> Flask:
     app.config['TITLE']= os.getenv('TITLE')
     app.config['DESCRIPTION']= os.getenv('DESCRIPTION')
     app.config['SITEPHP']= os.getenv('SITEPHP','http://localhost:8000/')
+    app.config['BDQM']= os.getenv('BDQM')
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
     #db=SQLAlchemy(app)
     #migrate=Migrate(app,db)
-
-    
+    app.dt_predictor=train_dt_predictor(app)
+    app.kmc_predictor=initiate_kmc_predictor(app)
 
     # Flask login
     login_manager.init_app(app)
@@ -74,6 +78,7 @@ def create_app(env: AppEnvironment = None) -> Flask:
     app.register_blueprint(test_bp)
     app.register_blueprint(core_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(api_bp)
 
     @app.context_processor
     def base():

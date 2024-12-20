@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+{% for category,message in get_flashed_messages(with_categories=True) %}
+<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
     {{message}}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -13,13 +13,15 @@
 {% endfor %}
 
 
-{% if name %}
+{% if name and error=='' %}
     <h1> Utilisateur a été ajouté!!</h1>
     <br/>
     
 {% else %}
-    <h2>Devenir membre</h2>
-    <br/>
+<div class="card shadow p-3 mb-5 bg-body rounded">
+  <div class="card-body">
+    <h4>Devenir membre</h4>
+    <hr/>
     <div class="shadow p-3 mb-5 bg-body rounded">
     <form method="POST">
         {{form.hidden_tag()}}
@@ -39,11 +41,6 @@
         {{form.email(class="form-control")}}
         
         <br/>
-        {{form.favorite_color.label(
-          class="form-label"
-      )}}
-      {{form.favorite_color(class="form-control")}}
-      <br/>
       {{form.about_author.label(
         class="form-label"
     )}}
@@ -62,43 +59,13 @@
       {{form.admin.label(
         class="form-label"
     )}}
-    {{form.admin()}}
+
+    {{form.admin()}}      <br/>
       <br/>
         {{form.submit(class="btn btn-primary")}}
     </form>
-    </div>
-<br/><br/><br/>
-{% endif %}
-<table class="table table-hover table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Nom</th>
-      <th scope="col">Nom d'Utilisateur</th>
-      <th scope="col">Email</th>
-      <th scope="col">Coleur favorite</th>
-      <th scope="col">Date</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-      {% for our_user in our_users %}
-      <tr>
-          <th scope="row">{{our_user.id}}</th>
-          <td><a href="{{url_for('user_bp.update',id=our_user.id)}}">{{our_user.name}}</a></td>
-          {% if our_user.admin %}
-          <td>{{our_user.username}} (Admin)</td>
-          {% else %}
-            <td>{{our_user.username}}</td>
-          {% endif %}
-          <td>{{our_user.email}}</td>
-          <td>{{our_user.favorite_color}}</td>
-          <td>{{our_user.createdAt.strftime('%Y-%m-%d %H:%M:%S')}}</td>
-          <td><a href="{{url_for('user_bp.update',id=our_user.id)}}">Modifier</a>
-            <a href="{{url_for('user_bp.delete',id=our_user.id)}}">Supprimer</a></td>
-      </tr>
+    </div></div></div>
 
-      {% endfor %}
-  </tbody>
-</table>
+{% endif %}
+
 {% endblock %}
