@@ -463,6 +463,91 @@
   .post-title-link:hover {
   text-decoration: none;      /* Ensure no underline on hover */
 }
+/* Custom Modal Styles */
+.custom-modal {
+ /* Hidden by default */
+  position: fixed;
+  z-index: 1050; /* High z-index to be on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+}
+
+.custom-modal-content {
+  background-color: #fff;
+  margin: 3% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 900px;
+  overflow-y: auto; /* Scrollable if the content exceeds max-height */
+  z-index: 1060; /* Ensure the modal content is on top of the overlay */
+}
+/* Modal Header */
+.modal-header {
+  display: flex;              /* Use Flexbox to align the title and close button on the same line */
+  justify-content: space-between; /* Ensures space between the title and the close button */
+  align-items: center;        /* Vertically centers the title and close button */
+  width: 100%;                /* Ensure header takes up full width */
+}
+
+.modal-title {
+  margin: 0;                  /* Remove any default margin */
+  flex-grow: 1;               /* Ensures the title takes up the available space */
+}
+
+
+.custom-close2 {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.custom-close2:hover,
+.custom-close2:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+  /* Ensure the container takes the full viewport height */
+  .full-screen-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    text-align: center;
+    padding:0 200px ;
+}
+
+/* Optional: Add padding or margin adjustments for better spacing */
+.full-screen-center h4 {
+    margin-bottom: 1rem;
+}
+
+.full-screen-center a {
+    display: inline-block;
+    margin-top: 1rem; /* Adjust spacing between text and the link */
+}
+
+/* Ensure the button has a transparent background and outline by default */
+.btn-outline-primary2 {
+  color: #007bff;  /* Set the default text color */
+  background-color: transparent;  /* Transparent background */
+  border-color: #007bff;  /* Outline color */
+}
+
+/* On hover, change the background to blue and text to white */
+.btn-outline-primary2:hover {
+  color: white;  /* Text turns white on hover */
+  background-color: #007bff;  /* Background turns blue on hover */
+  border-color: #007bff;  /* Maintain the blue border */
+}
     </style>
   </head>
   <body>
@@ -506,9 +591,9 @@
       <div class="col-md-3">
         <h5>Anciens sites</h5>
         <ul class="list-unstyled">
-          <li><a href="#" class="text-white">Premier site</a></li>
-          <li><a href="#" class="text-white">Deuxième site</a></li>
-          <li><a href="#" class="text-white">Site en PHP</a></li>
+          <li><a href="{{ g.sitephp +'projectaen.php' }}" class="text-white">Premier site</a></li>
+          <li><a href="{{ g.sitephp +'t1.php' }}" class="text-white">Deuxième site</a></li>
+          <li><a href="{{ g.sitephp }}" class="text-white">Site en PHP</a></li>
           <li><a href="#" class="text-white">Site en Vue</a></li>
         </ul>
       </div>
@@ -519,7 +604,7 @@
         <ul class="list-unstyled">
           <li><a href="#" class="text-white">Prévision QM</a></li>
           <li><a href="#" class="text-white">Projet de rapports</a></li>
-          <li><a href="#" class="text-white">Messenger</a></li>
+          <li><a href="{{ g.sitephp +'t3.php' }}" class="text-white">Messenger</a></li>
           <li><a href="#" class="text-white">Apps</a></li>
         </ul>
       </div>
@@ -531,7 +616,7 @@
           <li><a href="#" class="text-white">FAQ</a></li>
           <li><a href="#" class="text-white">Centre d'aide</a></li>
           <li><a href="#" class="text-white">Contact</a></li>
-          <li><a href="#" class="text-white">Termes & Conditions</a></li>
+          <li><a href="#" class="text-white">Termes & conditions</a></li>
         </ul>
       </div>
 

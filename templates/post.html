@@ -14,9 +14,18 @@
 <div class="card shadow p-3 mb-5 bg-body rounded">
   <div class="card-body">
         <h4 class="card-title">{{post.title}}</h4>
-        <small class="text-muted">{{post.poster.name}} - {{post.date_posted}}</small><hr/>
+        <small class="text-muted">
+          <!-- Poster name with user icon -->
+          <i class="fa fa-user" aria-hidden="true"></i> {{post.poster.name}} &nbsp; 
+      
+          <!-- Date posted with calendar icon -->
+          <i class="fa fa-calendar" aria-hidden="true"></i> {{post.date_posted}} &nbsp;
+      
+          <!-- Slug with link icon -->
+          <i class="fa fa-link" aria-hidden="true"></i> {{post.slug}}
+      </small><hr/>
         <div class="card-text">
-        {{post.slug}}<br/>
+        
         
 
         {{post.content|safe}}

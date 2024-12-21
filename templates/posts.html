@@ -4,36 +4,68 @@
 
 {% for message in get_flashed_messages() %}
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{message}}
+    {{ message }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
 </div>
 {% endfor %}
+<!-- Search Filters Form -->
+<div class="mb-4">
+  <form action="{{ url_for('post_bp.posts') }}" method="get" class="form-inline d-flex">
+    
+    <!-- Text Search Field -->
+    <div class="form-group mr-2 w-30">
+      <label for="search" class="mr-2">Chercher par titre:</label>
+      <input type="text" id="search" name="search" class="form-control" placeholder="Chercher par titre" value="{{ request.args.get('search') or '' }}">
+    </div>
+
+    <!-- Slug Dropdown Field -->
+    <div class="form-group mr-2 w-30">
+      <label for="slug" class="mr-2">Chercher par libelle:</label>
+      <select id="slug" name="slug" class="form-control">
+        <option value="">Choisir libelle</option>
+        {% for slug in slugs %}
+        <option value="{{ slug.slug }}" {% if slug.slug == request.args.get('slug') %}selected{% endif %}>{{ slug.slug }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Submit Button (Aligned to the Right) -->
+    <button type="submit" class="btn btn-outline-primary btn-sm ml-auto">Search</button>
+
+    <!-- Cancel Button (Resets the Filters) -->
+    <button type="reset" class="btn btn-outline-secondary btn-sm ml-2" onclick="window.location='{{ url_for('post_bp.posts') }}'">Cancel</button>
+  </form>
+</div>
 
 <!-- Blog Card Container -->
 <div class="card shadow p-3 mb-5 bg-body rounded">
   <div class="card-body">
-      <h4 class="card-title">Blog</h4>
-      <hr />
-      <br />
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="card-title">Articles</h4>
+      <!-- Pencil Icon Link -->
+      <a href="{{ url_for('post_bp.add_post') }}" class="btn btn-link">
+          <i class="fas fa-pencil-alt"></i>
+      </a>
+  </div>
+  <hr/>
       {% for post in posts %}
       <div class="shadow p-3 mb-5 bg-body rounded">
           <div class="d-flex justify-content-between align-items-start">
               <!-- Post Information -->
               <div>
-                  <h5 class="post-title-link"> <a href="{{url_for('post_bp.post',id=post.id)}}">{{post.title}}</a></h5>
-                  <small>{{post.poster.name}} - {{post.date_posted}}</small><br/>
-                  {{post.slug}}<br/>
+                  <h5 class="post-title-link"> <a href="{{ url_for('post_bp.post', id=post.id) }}">{{ post.title }}</a></h5>
+                  <small>{{ post.poster.name }} - {{ post.date_posted }} - {{ post.slug }}</small><br/>
               </div>
 
               <!-- Buttons on the Right -->
               <div class="d-flex flex-column align-items-end ml-3">
-                <a href="{{url_for('post_bp.post',id=post.id)}}" class="btn btn-outline-primary btn-sm mb-2">Visualiser</a>
+                <a href="{{ url_for('post_bp.post', id=post.id) }}" class="btn btn-outline-primary btn-sm mb-2">Visualiser</a>
                 
                 {% if post.poster_id == current_user.id %}
-                <a href="{{url_for('post_bp.edit_post',id=post.id)}}" class="btn btn-outline-primary btn-sm mb-2">Éditer</a>
-                <a href="{{url_for('post_bp.delete_post',id=post.id)}}" class="btn btn-outline-danger btn-sm">Supprimer</a>
+                <a href="{{ url_for('post_bp.edit_post', id=post.id) }}" class="btn btn-outline-primary btn-sm mb-2">Éditer</a>
+                <a href="{{ url_for('post_bp.delete_post', id=post.id) }}" class="btn btn-outline-danger btn-sm">Supprimer</a>
                 {% endif %}
               </div>
           </div>
@@ -41,7 +73,26 @@
       <hr />
       {% endfor %}
   </div>
+
+<!-- Pagination Controls -->
+<div class="d-flex justify-content-between align-items-center pagination">
+  <!-- Previous Button on the Left -->
+  {% if pagination.has_prev %}
+      <a href="{{ url_for('post_bp.posts', page=pagination.prev_num) }}" class="btn btn-outline-primary btn-sm">Previous</a>
+  {% endif %}
+
+  <!-- Page X of X in the Center -->
+  <span class="mx-auto">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+
+  <!-- Next Button on the Right -->
+  {% if pagination.has_next %}
+      <a href="{{ url_for('post_bp.posts', page=pagination.next_num) }}" class="btn btn-outline-primary btn-sm">Next</a>
+  {% endif %}
 </div>
+
+</div>
+
+
 
 
 {% endblock %}

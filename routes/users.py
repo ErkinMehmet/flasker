@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template, request, flash,redirect,url_for
+from flask import Blueprint, render_template, request, flash,redirect,url_for,current_app
 from flasker.app import db,admin_required
 from flasker.models import Users
 from flasker.forms import UserForm,PwdForm
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import login_required,current_user
-
+from werkzeug.utils import secure_filename
+import uuid as uuid
+import os
 # Create a Blueprint for user routes
 user_bp = Blueprint('user_bp', __name__)
 
@@ -53,12 +55,20 @@ def update(id):
         name_to_update.email=request.form['email']
         name_to_update.favorite_color='Bleu'
         name_to_update.about_author=request.form['about_author']
+
         admin_value = request.form.get('admin')
         if admin_value == 'on':  # 'on' is the default value for checked checkboxes
             name_to_update.admin = True
         else:
             name_to_update.admin = False
             
+        pic=request.files['profile_pic']
+        if pic and pic.filename:
+            pic_filename=secure_filename(pic.filename)
+            pic_name=str(uuid.uuid1(id))+"_"+pic_filename
+            name_to_update.profile_pic=pic_name
+            upload_folder = current_app.config['UPLOAD_FOLDER']
+            pic.save(os.path.join(upload_folder,pic_name))    
         try:
             db.session.commit()
             flash("Utilisateur mis à jour avec succès.")

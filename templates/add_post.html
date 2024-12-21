@@ -13,7 +13,7 @@
 {% endfor %}
 
 {% if current_user.is_authenticated %}
-    <h1>Ajouter poste de blog</h1>
+    <h4 class="card-title">Ajouter un article</h4>
     <br/>
     <div class="shadow p-3 mb-5 bg-body rounded">
     <form method="POST">
@@ -32,16 +32,49 @@
         {{form.content.label(
           class="form-label"
       )}}
-      {{form.content(class="form-control")}}
+      <textarea name="content" id="editor" class="form-control"></textarea>
       <br/>
         {{form.submit(class="btn btn-primary")}}
     </form>
-    {{ckeditor.load()}}
-    {{ckeditor.config(name='content')}}
+    <script>
+      ClassicEditor
+          .create(document.querySelector('#editor'), {
+              ckfinder: {
+                  uploadUrl: '/upload-image'  // The URL to handle the image upload
+              },
+              toolbar: [
+                  'heading', '|', 'bold', 'italic', 'link', '|', 'imageUpload' // Add image upload button to the toolbar
+              ]
+          })
+          .catch(error => {
+              console.error(error);
+          });
+  </script>
     </div>
 <br/><br/><br/>
-{% else %}
-<h2> Il faut vous connecter</h2>
-<a href="{{url_for('core_bp.login')}}">Se connecter</a>
+{% else %} <div class="full-screen-center">
+  <div>
+<h4>Il faudrait vous connecter dans <span id="countdown">5</span> secondes, ou cliquer sur le lien en bas pour vous diriger vers la page de connexion:</h4>
+<a href="{{ url_for('core_bp.login') }}" class="mt-10">Se connecter</a></div>
+</div>
+<script>
+    // Countdown and redirect script
+    let countdownElement = document.getElementById('countdown');
+    let secondsRemaining = 5;
+
+    function updateCountdown() {
+        if (secondsRemaining > 0) {
+            secondsRemaining--;
+            countdownElement.textContent = secondsRemaining;
+        } else {
+            // Redirect to login page after countdown
+            window.location.href = "{{ url_for('core_bp.login') }}";
+        }
+    }
+
+    // Update countdown every second
+    setInterval(updateCountdown, 1000);
+</script>
+
 {% endif %}
 {% endblock %}

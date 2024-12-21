@@ -1,4 +1,4 @@
-from flask import Flask,render_template,flash,request,redirect,url_for,abort
+from flask import Flask,render_template,flash,request,redirect,url_for,abort, jsonify,g,current_app
 from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField,PasswordField,BooleanField,ValidationError
 from wtforms.validators import DataRequired,EqualTo,Length
@@ -14,10 +14,10 @@ from flask_login import LoginManager,login_required,UserMixin,logout_user,curren
 from flasker.forms import UserForm,LoginForm,PostForm,PwdForm,NamerForm,SearchForm
 from flask_ckeditor import CKEditor
 from functools import wraps
-
+from werkzeug.utils import secure_filename
 from flasker.regressors.dt import train_dt_predictor
 from flasker.regressors.predictor import Prediction, Predictor
-from flasker.clustering.kmeanscluster import initiate_kmc_predictor
+
 @dataclass
 class AppEnvironment:
     api_key: str
@@ -57,13 +57,25 @@ def create_app(env: AppEnvironment = None) -> Flask:
     app.config['DESCRIPTION']= os.getenv('DESCRIPTION')
     app.config['SITEPHP']= os.getenv('SITEPHP','http://localhost:8000/')
     app.config['BDQM']= os.getenv('BDQM')
+    app.config['UPLOAD_FOLDER'] = 'static/images'
+    app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+    @app.before_request
+    def add_sitephp_to_g():
+        g.sitephp = current_app.config['SITEPHP']
+
+
+
+
+
+
+
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
     #db=SQLAlchemy(app)
     #migrate=Migrate(app,db)
-    app.dt_predictor=train_dt_predictor(app)
-    app.kmc_predictor=initiate_kmc_predictor(app)
+    #app.dt_predictor=train_dt_predictor(app)
+    #app.kmc_predictor=initiate_kmc_predictor(app)
 
     # Flask login
     login_manager.init_app(app)

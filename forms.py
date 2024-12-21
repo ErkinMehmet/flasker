@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,SubmitField,PasswordField,BooleanField,ValidationError
+from wtforms import StringField,SubmitField,PasswordField,BooleanField,ValidationError,SelectField,IntegerField
 from wtforms.validators import DataRequired,EqualTo,Length
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
@@ -40,3 +40,41 @@ class LoginForm(FlaskForm):
 class SearchForm(FlaskForm):
      searched=StringField("Chercher",validators=[DataRequired()])
      submit=SubmitField("Soumettre")
+
+class ClusteringForm(FlaskForm):
+    modele = SelectField('Algorithme de Clustering', choices=[('K-Means', 'K-Means'),
+                                                             ('DBSCAN', 'DBSCAN'),
+                                                             ('Hierarchical', 'Clustering Hiérarchique'),
+                                                             ('Gaussian Mixture', 'Mélange Gaussien')],
+                         validators=[DataRequired()])
+    mesure = SelectField('Mesure', choices=[('Silhouette', 'Silhouette'),
+                                            ('Inertie', 'Inertie'),
+                                            ('Dunn Index', 'Indice de Dunn')],
+                         validators=[DataRequired()])
+    colonnes_categories = StringField('Colonnes de catégories', validators=[DataRequired()])
+    colonnes_numeriques = StringField('Colonnes numériques', validators=[DataRequired()])
+    sql_query = StringField('SQL Query',widget=TextArea(), validators=[DataRequired()])
+    random_state = IntegerField('Random State', validators=[DataRequired()], default=42)  # Default value for example
+    number_of_clusters = IntegerField('Nombre de Clusters', validators=[DataRequired()])
+    submit = SubmitField('Soumettre')
+
+class RegressionForm(FlaskForm):
+    modele = SelectField('Algorithme de Régression', choices=[('Régression Linéaire', 'Régression Linéaire'),
+                                                              ('Régression Logistique', 'Régression Logistique'),
+                                                              ('Arbre de Décision', 'Arbre de Décision'),
+                                                              ('Forêt Aléatoire', 'Forêt Aléatoire'),
+                                                              ('Support Vector Machine', 'Machine à Vecteurs de Support'),
+                                                              ('Ridge', 'Ridge'),
+                                                              ('Lasso', 'Lasso')],
+                         validators=[DataRequired()])
+    mesure = SelectField('Mesure', choices=[('R2', 'R2'),
+                                            ('MSE', 'MSE'),
+                                            ('Exactitude', 'Exactitude')],
+                         validators=[DataRequired()])
+    colonnes_categories = StringField('Colonnes de catégories', validators=[DataRequired()])
+    colonnes_numeriques = StringField('Colonnes numériques', validators=[DataRequired()])
+    colonne_sortie = StringField('Colonne de sortie', validators=[DataRequired()])
+    sql_query = StringField('Requête SQL', widget=TextArea(), validators=[DataRequired()])
+    random_state = IntegerField('Random State', validators=[DataRequired()], default=42)  # Valeur par défaut
+    submit = SubmitField('Soumettre')
+

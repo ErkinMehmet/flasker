@@ -16,5 +16,5 @@ from sklearn.metrics import r2_score, mean_squared_error, accuracy_score
 
 class LogisticRegressionPredictor(Predictor):
     def __init__(self, model: LogisticRegression, encoder, metric, 
-                 metric_name: str, cols1: List[str], cols2: List[str], cols3: List[str], req) -> None:
-        super().__init__(model, encoder, metric, metric_name, cols1, cols2, cols3, req)
+                 metric_name: str, cols1: List[str], cols2: List[str], cols3: List[str], req,categories) -> None:
+        super().__init__(model, encoder, metric, metric_name, cols1, cols2, cols3, req,categories)
